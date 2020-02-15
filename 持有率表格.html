@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>持有率计算</title>
+<style type="text/css">
+html {
+	font-family: "Microsoft Yahei", Helvetica;
+	font-size: 16px;
+	height:100%;
+	overflow:auto;
+	-webkit-overflow-scrolling:touch;  
+}
+
+table {table-layout:fixed;overflow:hidden;margin:0 auto;}
+td { overflow:hidden;text-overflow:ellipsis;nowrap:false;}
+.pssd0 { background-color:#888; cursor:pointer; }
+.pssd1 { background-color:#ffffff; cursor:pointer; }
+.pssd0 img { filter: grayscale(0.5) opacity(0.3); width:100%;}
+.pssd1 img { width:100%;}
+.iccl { width:16%; background-color:#dddfe3}
+body {text-align:center;}
+#col01 { width:100%; max-width:720px; height:300px; margin:0 auto; height:16px;}
+#col02 { overflow:auto; width:100%; max-width: 720px; margin:0 auto; border:solid black 0px; text-align:right;}
+button { width:30%;}
+</style>
+<script type="text/javascript">
+var norhrgf = 22;
+var norhrrf = 27;
+var norhr = norhrrf;
+var nall = 0;
+var norct = 0;
+var nclvr = 0;
+var ncstm = 0;
+var nmiku = 0;
+var nguil = 0;
+var nsesn = 0;
+var noth = 0;
+function inins() {
+document.getElementById("nally").innerHTML = nall;
+document.getElementById("nalln").innerHTML = norhr*5-nall;
+document.getElementById("nallp").innerHTML = toPercent(nall/5/norhr) ;
+document.getElementById("norcty").innerHTML = norct;
+document.getElementById("norctn").innerHTML = norhr-norct;
+document.getElementById("norctp").innerHTML = toPercent(norct/norhr) ;
+document.getElementById("nclvry").innerHTML = nclvr;
+document.getElementById("nclvrn").innerHTML = norhr*2-nclvr;
+document.getElementById("nclvrp").innerHTML = toPercent(nclvr/2/norhr) ;
+document.getElementById("ncstmy").innerHTML = ncstm;
+document.getElementById("ncstmn").innerHTML = norhr*2-ncstm;
+document.getElementById("ncstmp").innerHTML = toPercent(ncstm/2/norhr) ;
+}
+
+function tete(x) {
+alert(x);
+}
+
+function toPercent(point){
+if (point==0) {
+return 0;
+}
+var str=Number(point*100).toFixed();
+str+="%";
+return str;
+}
+
+
+function stswtss(tid) {
+var tclass=document.getElementById(tid).className;
+var ifpssd = tclass.search("pssd1")+1;
+var tclasshero = tclass.charAt(11) + tclass.charAt(12);
+var tclasslexi = tclass.charAt(6) + tclass.charAt(7) + tclass.charAt(8) + tclass.charAt(9);
+//若未持有
+if(ifpssd==0) {
+tclass=tclass.replace(/pssd0/,"pssd1");
+document.getElementById(tid).className=tclass;
+nall++;
+if(tclasslexi=="oris") { norct++; }
+if(tclasslexi=="clvr") { nclvr++; }
+if(tclasslexi=="cstm") { ncstm++; }
+}
+//若持有
+else if(tclass!=0) {
+tclass=tclass.replace(/pssd1/,"pssd0");
+document.getElementById(tid).className=tclass;
+nall--;
+if(tclasslexi=="oris") { norct--; }
+if(tclasslexi=="clvr") { nclvr--; }
+if(tclasslexi=="cstm") { ncstm--; }
+}
+inins();
+}
+
+function stswtto0(tid) {
+var tclass=document.getElementById(tid).className;
+var ifpssd = tclass.search("pssd1")+1;
+var tclasshero = tclass.charAt(11) + tclass.charAt(12);
+var tclasslexi = tclass.charAt(6) + tclass.charAt(7) + tclass.charAt(8) + tclass.charAt(9);
+//若未持有
+if(ifpssd==0) {
+}
+//若持有
+else if(tclass!=0) {
+tclass=tclass.replace(/pssd1/,"pssd0");
+document.getElementById(tid).className=tclass;
+nall--;
+if(tclasslexi=="oris") { norct--; }
+if(tclasslexi=="clvr") { nclvr--; }
+if(tclasslexi=="cstm") { ncstm--; }
+}
+inins();
+}
+
+function slctall(x) {
+//全选
+if(x==1) {
+document.getElementById("quanxuan").style.display="none";
+document.getElementById("quanbuxuan").style.display="inline";
+var z = document.getElementsByClassName("pssd0");
+var zzzz = z.length ;
+var i,y;
+for (i = 0; zzzz!=0;) {
+    y = z[i].id;
+stswtss(y);
+}
+}
+
+//全不选
+if(x==0) {
+document.getElementById("quanbuxuan").style.display="none";
+document.getElementById("quanxuan").style.display="inline";
+var z = document.getElementsByClassName("pssd1");
+var zzzz = z.length ;
+var i,y;
+for (i = 0; zzzz!=0;) {
+    y = z[i].id;
+stswtss(y);
+}
+}
+inins();
+}
+
+
+function chankn(x) {
+if(x==1) {
+norhr = norhrgf;
+document.getElementById("qieguofu").style.display="none";
+document.getElementById("qierifu").style.display="inline";
+var y = document.getElementsByClassName("chinese");
+var z = document.getElementsByClassName("chinecl");
+var i;
+for (i = 0; i < y.length; i++) {
+    y[i].style.display = "none";
+}
+for (i = 0; i < z.length; i++) {
+	stswtto0(z[i].id);
+}
+}
+if(x==0) {
+norhr = norhrrf;
+inins();
+document.getElementById("qieguofu").style.display="inline";
+document.getElementById("qierifu").style.display="none";
+var y = document.getElementsByClassName("chinese");
+var i;
+for (i = 0; i < y.length; i++) {
+    y[i].style.display = "inline";
+}
+}
+inins();
+}
+</script>
+</head>
+
+<body>
+
+<div id="col02">
+<button id="qieguofu" onclick="chankn(1)">切换到国服</button>
+<button id="qierifu" style="display:none;" onclick="chankn(0)">切换到日服</button>
+<button id="quanxuan" onclick="slctall(1)">全选</button>
+<button id="quanbuxuan" onclick="slctall(0)" style="display:none;">全不选</button>
+</div>
+
+<div style="height:10px"></div>
+<div id="col01">
+
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_kz00.png" /></td>
+<td id="kz00" class="pssd0 oris kz" onclick="stswtss('kz00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_kz00_00.png" /></td>
+<td id="kz01" class="pssd0 clvr kz" onclick="stswtss('kz01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_kz00_01.png" /></td>
+<td id="kz02" class="pssd0 clvr kz" onclick="stswtss('kz02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_kz00_02.png" /></td>
+<td id="kz03" class="pssd0 cstm kz" onclick="stswtss('kz03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_kz00_03.png" /></td>
+<td id="kz04" class="pssd0 cstm kz" onclick="stswtss('kz04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_kz00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_jt00.png" /></td>
+<td id="jt00" class="pssd0 oris jt" onclick="stswtss('jt00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_jt00_00.png" /></td>
+<td id="jt01" class="pssd0 clvr jt" onclick="stswtss('jt01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_jt00_01.png" /></td>
+<td id="jt02" class="pssd0 clvr jt" onclick="stswtss('jt02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_jt00_02.png" /></td>
+<td id="jt03" class="pssd0 cstm jt" onclick="stswtss('jt03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_jt00_03.png" /></td>
+<td id="jt04" class="pssd0 cstm jt" onclick="stswtss('jt04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_jt00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_mg00.png" /></td>
+<td id="mg00" class="pssd0 oris mg" onclick="stswtss('mg00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_mg00_00.png" /></td>
+<td id="mg01" class="pssd0 clvr mg" onclick="stswtss('mg01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_mg00_01.png" /></td>
+<td id="mg02" class="pssd0 clvr mg" onclick="stswtss('mg02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_mg00_02.png" /></td>
+<td id="mg03" class="pssd0 cstm mg" onclick="stswtss('mg03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_mg00_03.png" /></td>
+<td id="mg04" class="pssd0 cstm mg" onclick="stswtss('mg04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_mg00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_cg00.png" /></td>
+<td id="cg00" class="pssd0 oris cg" onclick="stswtss('cg00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_cg00_00.png" /></td>
+<td id="cg01" class="pssd0 clvr cg" onclick="stswtss('cg01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_cg00_01.png" /></td>
+<td id="cg02" class="pssd0 clvr cg" onclick="stswtss('cg02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_cg00_02.png" /></td>
+<td id="cg03" class="pssd0 cstm cg" onclick="stswtss('cg03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_cg00_03.png" /></td>
+<td id="cg04" class="pssd0 cstm cg" onclick="stswtss('cg04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_cg00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_cm00.png" /></td>
+<td id="cm00" class="pssd0 oris cm" onclick="stswtss('cm00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_cm00_00.png" /></td>
+<td id="cm01" class="pssd0 clvr cm" onclick="stswtss('cm01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_cm00_01.png" /></td>
+<td id="cm02" class="pssd0 clvr cm" onclick="stswtss('cm02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_cm00_02.png" /></td>
+<td id="cm03" class="pssd0 cstm cm" onclick="stswtss('cm03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_cm00_03.png" /></td>
+<td id="cm04" class="pssd0 cstm cm" onclick="stswtss('cm04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_cm00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_jn00.png" /></td>
+<td id="jn00" class="pssd0 oris jn" onclick="stswtss('jn00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_jn00_00.png" /></td>
+<td id="jn01" class="pssd0 clvr jn" onclick="stswtss('jn01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_jn00_01.png" /></td>
+<td id="jn02" class="pssd0 clvr jn" onclick="stswtss('jn02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_jn00_02.png" /></td>
+<td id="jn03" class="pssd0 cstm jn" onclick="stswtss('jn03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_jn00_03.png" /></td>
+<td id="jn04" class="pssd0 cstm jn" onclick="stswtss('jn04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_jn00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_nt00.png" /></td>
+<td id="nt00" class="pssd0 oris nt" onclick="stswtss('nt00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_nt00_00.png" /></td>
+<td id="nt01" class="pssd0 clvr nt" onclick="stswtss('nt01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_nt00_01.png" /></td>
+<td id="nt02" class="pssd0 clvr nt" onclick="stswtss('nt02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_nt00_02.png" /></td>
+<td id="nt03" class="pssd0 cstm nt" onclick="stswtss('nt03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_nt00_03.png" /></td>
+<td id="nt04" class="pssd0 cstm nt" onclick="stswtss('nt04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_nt00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_hm00.png" /></td>
+<td id="hm00" class="pssd0 oris hm" onclick="stswtss('hm00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_hm00_00.png" /></td>
+<td id="hm01" class="pssd0 clvr hm" onclick="stswtss('hm01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_hm00_01.png" /></td>
+<td id="hm02" class="pssd0 clvr hm" onclick="stswtss('hm02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_hm00_02.png" /></td>
+<td id="hm03" class="pssd0 cstm hm" onclick="stswtss('hm03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_hm00_03.png" /></td>
+<td id="hm04" class="pssd0 cstm hm" onclick="stswtss('hm04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_hm00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_rb00.png" /></td>
+<td id="rb00" class="pssd0 oris rb" onclick="stswtss('rb00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_rb00_00.png" /></td>
+<td id="rb01" class="pssd0 clvr rb" onclick="stswtss('rb01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_rb00_01.png" /></td>
+<td id="rb02" class="pssd0 clvr rb" onclick="stswtss('rb02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_rb00_02.png" /></td>
+<td id="rb03" class="pssd0 cstm rb" onclick="stswtss('rb03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_rb00_03.png" /></td>
+<td id="rb04" class="pssd0 cstm rb" onclick="stswtss('rb04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_rb00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_fg00.png" /></td>
+<td id="fg00" class="pssd0 oris fg" onclick="stswtss('fg00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_fg00_00.png" /></td>
+<td id="fg01" class="pssd0 clvr fg" onclick="stswtss('fg01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_fg00_01.png" /></td>
+<td id="fg02" class="pssd0 clvr fg" onclick="stswtss('fg02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_fg00_02.png" /></td>
+<td id="fg03" class="pssd0 cstm fg" onclick="stswtss('fg03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_fg00_03.png" /></td>
+<td id="fg04" class="pssd0 cstm fg" onclick="stswtss('fg04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_fg00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_pg00.png" /></td>
+<td id="pg00" class="pssd0 oris pg" onclick="stswtss('pg00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_pg00_00.png" /></td>
+<td id="pg01" class="pssd0 clvr pg" onclick="stswtss('pg01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_pg00_01.png" /></td>
+<td id="pg02" class="pssd0 clvr pg" onclick="stswtss('pg02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_pg00_02.png" /></td>
+<td id="pg03" class="pssd0 cstm pg" onclick="stswtss('pg03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_pg00_03.png" /></td>
+<td id="pg04" class="pssd0 cstm pg" onclick="stswtss('pg04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_pg00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_gb00.png" /></td>
+<td id="gb00" class="pssd0 oris gb" onclick="stswtss('gb00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_gb00_00.png" /></td>
+<td id="gb01" class="pssd0 clvr gb" onclick="stswtss('gb01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_gb00_01.png" /></td>
+<td id="gb02" class="pssd0 clvr gb" onclick="stswtss('gb02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_gb00_02.png" /></td>
+<td id="gb03" class="pssd0 cstm gb" onclick="stswtss('gb03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_gb00_03.png" /></td>
+<td id="gb04" class="pssd0 cstm gb" onclick="stswtss('gb04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_gb00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_dv00.png" /></td>
+<td id="dv00" class="pssd0 oris dv" onclick="stswtss('dv00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dv00_00.png" /></td>
+<td id="dv01" class="pssd0 clvr dv" onclick="stswtss('dv01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dv00_01.png" /></td>
+<td id="dv02" class="pssd0 clvr dv" onclick="stswtss('dv02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dv00_02.png" /></td>
+<td id="dv03" class="pssd0 cstm dv" onclick="stswtss('dv03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dv00_03.png" /></td>
+<td id="dv04" class="pssd0 cstm dv" onclick="stswtss('dv04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dv00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_ex00.png" /></td>
+<td id="ex00" class="pssd0 oris ex" onclick="stswtss('ex00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ex00_00.png" /></td>
+<td id="ex01" class="pssd0 clvr ex" onclick="stswtss('ex01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ex00_01.png" /></td>
+<td id="ex02" class="pssd0 clvr ex" onclick="stswtss('ex02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ex00_02.png" /></td>
+<td id="ex03" class="pssd0 cstm ex" onclick="stswtss('ex03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ex00_03.png" /></td>
+<td id="ex04" class="pssd0 cstm ex" onclick="stswtss('ex04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ex00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_sl00.png" /></td>
+<td id="sl00" class="pssd0 oris sl" onclick="stswtss('sl00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_sl00_00.png" /></td>
+<td id="sl01" class="pssd0 clvr sl" onclick="stswtss('sl01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_sl00_01.png" /></td>
+<td id="sl02" class="pssd0 clvr sl" onclick="stswtss('sl02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_sl00_02.png" /></td>
+<td id="sl03" class="pssd0 cstm sl" onclick="stswtss('sl03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_sl00_03.png" /></td>
+<td id="sl04" class="pssd0 cstm sl" onclick="stswtss('sl04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_sl00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_ig00.png" /></td>
+<td id="ig00" class="pssd0 oris ig" onclick="stswtss('ig00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ig00_00.png" /></td>
+<td id="ig01" class="pssd0 clvr ig" onclick="stswtss('ig01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ig00_01.png" /></td>
+<td id="ig02" class="pssd0 clvr ig" onclick="stswtss('ig02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ig00_02.png" /></td>
+<td id="ig03" class="pssd0 cstm ig" onclick="stswtss('ig03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ig00_03.png" /></td>
+<td id="ig04" class="pssd0 cstm ig" onclick="stswtss('ig04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ig00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_tt00.png" /></td>
+<td id="tt00" class="pssd0 oris tt" onclick="stswtss('tt00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_tt00_00.png" /></td>
+<td id="tt01" class="pssd0 clvr tt" onclick="stswtss('tt01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_tt00_01.png" /></td>
+<td id="tt02" class="pssd0 clvr tt" onclick="stswtss('tt02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_tt00_02.png" /></td>
+<td id="tt03" class="pssd0 cstm tt" onclick="stswtss('tt03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_tt00_03.png" /></td>
+<td id="tt04" class="pssd0 cstm tt" onclick="stswtss('tt04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_tt00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_ky00.png" /></td>
+<td id="ky00" class="pssd0 oris ky" onclick="stswtss('ky00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ky00_00.png" /></td>
+<td id="ky01" class="pssd0 clvr ky" onclick="stswtss('ky01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ky00_01.png" /></td>
+<td id="ky02" class="pssd0 clvr ky" onclick="stswtss('ky02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ky00_02.png" /></td>
+<td id="ky03" class="pssd0 cstm ky" onclick="stswtss('ky03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ky00_03.png" /></td>
+<td id="ky04" class="pssd0 cstm ky" onclick="stswtss('ky04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ky00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_gg00.png" /></td>
+<td id="gg00" class="pssd0 oris gg" onclick="stswtss('gg00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_gg00_00.png" /></td>
+<td id="gg01" class="pssd0 clvr gg" onclick="stswtss('gg01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_gg00_01.png" /></td>
+<td id="gg02" class="pssd0 clvr gg" onclick="stswtss('gg02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_gg00_02.png" /></td>
+<td id="gg03" class="pssd0 cstm gg" onclick="stswtss('gg03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_gg00_03.png" /></td>
+<td id="gg04" class="pssd0 cstm gg" onclick="stswtss('gg04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_gg00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_eg00.png" /></td>
+<td id="eg00" class="pssd0 oris eg" onclick="stswtss('eg00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_eg00_00.png" /></td>
+<td id="eg01" class="pssd0 clvr eg" onclick="stswtss('eg01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_eg00_01.png" /></td>
+<td id="eg02" class="pssd0 clvr eg" onclick="stswtss('eg02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_eg00_02.png" /></td>
+<td id="eg03" class="pssd0 cstm eg" onclick="stswtss('eg03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_eg00_03.png" /></td>
+<td id="eg04" class="pssd0 cstm eg" onclick="stswtss('eg04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_eg00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_ng00.png" /></td>
+<td id="ng00" class="pssd0 oris ng" onclick="stswtss('ng00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ng00_00.png" /></td>
+<td id="ng01" class="pssd0 clvr ng" onclick="stswtss('ng01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ng00_01.png" /></td>
+<td id="ng02" class="pssd0 clvr ng" onclick="stswtss('ng02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ng00_02.png" /></td>
+<td id="ng03" class="pssd0 cstm ng" onclick="stswtss('ng03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ng00_03.png" /></td>
+<td id="ng04" class="pssd0 cstm ng" onclick="stswtss('ng04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ng00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_dq00.png" /></td>
+<td id="dq00" class="pssd0 oris dq" onclick="stswtss('dq00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dq00_00.png" /></td>
+<td id="dq01" class="pssd0 clvr dq" onclick="stswtss('dq01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dq00_01.png" /></td>
+<td id="dq02" class="pssd0 clvr dq" onclick="stswtss('dq02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dq00_02.png" /></td>
+<td id="dq03" class="pssd0 cstm dq" onclick="stswtss('dq03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dq00_03.png" /></td>
+<td id="dq04" class="pssd0 cstm dq" onclick="stswtss('dq04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dq00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0" class="chinese">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_ib00.png" /></td>
+<td id="ib00" class="pssd0 oris ib chinecl" onclick="stswtss('ib00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ib00_00.png" /></td>
+<td id="ib01" class="pssd0 clvr ib chinecl" onclick="stswtss('ib01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ib00_01.png" /></td>
+<td id="ib02" class="pssd0 clvr ib chinecl" onclick="stswtss('ib02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ib00_02.png" /></td>
+<td id="ib03" class="pssd0 cstm ib chinecl" onclick="stswtss('ib03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ib00_03.png" /></td>
+<td id="ib04" class="pssd0 cstm ib chinecl" onclick="stswtss('ib04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_ib00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0" class="chinese">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_dk00.png" /></td>
+<td id="dk00" class="pssd0 oris dk chinecl" onclick="stswtss('dk00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dk00_00.png" /></td>
+<td id="dk01" class="pssd0 clvr dk chinecl" onclick="stswtss('dk01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dk00_01.png" /></td>
+<td id="dk02" class="pssd0 clvr dk chinecl" onclick="stswtss('dk02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dk00_02.png" /></td>
+<td id="dk03" class="pssd0 cstm dk chinecl" onclick="stswtss('dk03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dk00_03.png" /></td>
+<td id="dk04" class="pssd0 cstm dk chinecl" onclick="stswtss('dk04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_dk00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0" class="chinese">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_tm00.png" /></td>
+<td id="tm00" class="pssd0 oris tm chinecl" onclick="stswtss('tm00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_tm00_00.png" /></td>
+<td id="tm01" class="pssd0 clvr tm chinecl" onclick="stswtss('tm01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_tm00_01.png" /></td>
+<td id="tm02" class="pssd0 clvr tm chinecl" onclick="stswtss('tm02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_tm00_02.png" /></td>
+<td id="tm03" class="pssd0 cstm tm chinecl" onclick="stswtss('tm03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_tm00_03.png" /></td>
+<td id="tm04" class="pssd0 cstm tm chinecl" onclick="stswtss('tm04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_tm00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0" class="chinese">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_la00.png" /></td>
+<td id="la00" class="pssd0 oris la chinecl" onclick="stswtss('la00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_la00_00.png" /></td>
+<td id="la01" class="pssd0 clvr la chinecl" onclick="stswtss('la01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_la00_01.png" /></td>
+<td id="la02" class="pssd0 clvr la chinecl" onclick="stswtss('la02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_la00_02.png" /></td>
+<td id="la03" class="pssd0 cstm la chinecl" onclick="stswtss('la03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_la00_03.png" /></td>
+<td id="la04" class="pssd0 cstm la chinecl" onclick="stswtss('la04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_la00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0" class="chinese">
+<tbody>
+<tr>
+<td class="iccl"><img width="100%" src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/hric/ui_main_menuaccountroot_hero_small_lr00.png" /></td>
+<td id="lr00" class="pssd0 oris lr chinecl" onclick="stswtss('lr00')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_lr00_00.png" /></td>
+<td id="lr01" class="pssd0 clvr lr chinecl" onclick="stswtss('lr01')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_lr00_01.png" /></td>
+<td id="lr02" class="pssd0 clvr lr chinecl" onclick="stswtss('lr02')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_lr00_02.png" /></td>
+<td id="lr03" class="pssd0 cstm lr chinecl" onclick="stswtss('lr03')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_lr00_03.png" /></td>
+<td id="lr04" class="pssd0 cstm lr chinecl" onclick="stswtss('lr04')"><img src="https://kabochatora-1257906772.cos.ap-chengdu.myqcloud.com/200215/icon/ui_game_deck_lr00_04.png" /></td>
+</tr>
+</tbody>
+</table>
+
+<!--统计结果-->
+<p></p>
+
+<table width="100%" border="1" cellpadding="3" cellspacing="0"><tbody>
+<tr><td width="34%"></td><td width="22%">已持有</td><td width="22%">未持有</td><td width="22%">持有率</td></tr>
+<tr><td>初始</td><td id="norcty">0</td><td id="norctn">23</td><td id="norctp">0</td></tr>
+<tr><td>异色</td><td id="nclvry">0</td><td id="nclvrn">23</td><td id="nclvrp">0</td></tr>
+<tr><td>变装</td><td id="ncstmy">0</td><td id="ncstmn">23</td><td id="ncstmp">0</td></tr>
+<tr><td>合计</td><td id="nally">0</td><td id="nalln">23</td><td id="nallp">0</td></tr>
+</tbody></table>
+<p>&nbsp;</p>
+</div>
+
+
+<script type="text/javascript">
+inins();
+
+</script>
+
+</body>
+
+</html>
